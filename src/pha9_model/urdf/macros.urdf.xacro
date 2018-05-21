@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Generates a box visual/collision/inertial -->
+  <!-- this doesn't work -->
+<!--  <xacro:macro name="box_link" params="title width depth length shift3D:=[0,0,0] rpy:=[0,0,0] mass:=0.01">-->
+<!--  <xacro:macro name="box_link" params="title width depth length shift3D:='0 0 0' rpy:='0 0 0' mass:=0.01">-->
+<!--  <xacro:macro name="box_link" params="title width depth length shift3D:=0 0 0 rpy:=0 0 0 mass:=0.01">-->
+  <xacro:macro name="box_link" params="which title width depth length mass:=0.01 *origin">
+    <link name="${which}_${title}">
+		  <xacro:macro name="box_geometry">
+        <xacro:insert_block name="origin"/>
+		    <geometry>
+		      <box size="${width} ${depth} ${length}"/>
+		    </geometry>
+		  </xacro:macro>
+		  
+		  <visual>
+		    <xacro:box_geometry/>
+		    <material name="gray"/>
+		  </visual>
+		  
+		  <collision>
+		    <xacro:box_geometry/>
+		  </collision>
+		  
+		  <inertial>
+        <xacro:insert_block name="origin"/>
+		    <mass value="${mass}"/>
+		    <inertia ixx="${(mass/3)*(depth*depth+length*length)}"
+		             iyy="${(mass/3)*(width*width+length*length)}"
+		             izz="${(mass/3)*(depth*depth+width*width)}"
+		             ixy="0" ixz="0" iyz="0"/>
+		  </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- Generates a sphere visual/collision/inertial -->
+  <xacro:macro name="sphere_link" params="which title radius mass:=0.01 *origin">
+    <link name="${which}_${title}">
+		  <xacro:macro name="sphere_geometry">
+        <xacro:insert_block name="origin"/>
+		    <geometry>
+		      <sphere radius="${radius}"/>
+		    </geometry>
+		  </xacro:macro>
+		  
+		  <visual>
+		    <xacro:sphere_geometry/>
+		    <material name="gray"/>
+		  </visual>
+		  
+		  <collision>
+		    <xacro:sphere_geometry/>
+		  </collision>
+		  
+		  <inertial>
+        <xacro:insert_block name="origin"/>
+		    <mass value="${mass}"/>
+		    <inertia ixx="${(2/5)*mass*radius*radius}"
+		             iyy="${(2/5)*mass*radius*radius}"
+		             izz="${(2/5)*mass*radius*radius}"
+		             ixy="0" ixz="0" iyz="0"/>
+		  </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- Generates a cylinder visual/collision/inertial -->
+  <xacro:macro name="cylinder_link" params="which title radius length mass:=0.01 *origin">
+    <link name="${which}_${title}">
+		  <xacro:macro name="cylinder_geometry">
+        <xacro:insert_block name="origin"/>
+		    <geometry>
+		      <cylinder radius="${radius}" length="${length}"/>
+		    </geometry>
+		  </xacro:macro>
+		  
+		  <visual>
+		    <xacro:cylinder_geometry/>
+		    <material name="gray"/>
+		  </visual>
+		  
+		  <collision>
+		    <xacro:cylinder_geometry/>
+		  </collision>
+		  
+		  <inertial>
+        <xacro:insert_block name="origin"/>
+		    <mass value="${mass}"/>
+		    <inertia ixx="${(1/4)*mass*radius*radius + (1/3)*mass*length*length}"
+		             iyy="${(1/4)*mass*radius*radius + (1/3)*mass*length*length}"
+		             izz="${(1/2)*mass*radius*radius}"
+		             ixy="0" ixz="0" iyz="0"/>
+		  </inertial>
+  </link>
+  </xacro:macro>
+
+  <!-- Generates revolute child joint of parent -->
+  <xacro:macro name="revolute_joint" params="which parent child axis lower upper effort velocity *origin">
+    <joint name="${which}_${parent}_to_${which}_${child}" type="revolute">
+      <xacro:insert_block name="origin"/>
+      <parent link="${which}_${parent}"/>
+      <child link="${which}_${child}"/>
+      <axis xyz="${axis}"/>
+      <limit effort="${effort}"
+             velocity="${velocity}"
+             lower="${lower}"
+             upper="${upper}"/>
+    </joint>
+    
+    <!-- Required for ROS control -->
+    <transmission name="${which}_${parent}_to_${which}_${child}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${which}_${parent}_to_${which}_${child}">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${which}_${parent}_to_${which}_${child}_motor">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <!-- Not sure if it is useful -->
+<!--    <gazebo reference="${parent}">-->
+<!--      <material>Gazebo/Gray</material>-->
+<!--    </gazebo>-->
+  </xacro:macro>
+
+</robot>

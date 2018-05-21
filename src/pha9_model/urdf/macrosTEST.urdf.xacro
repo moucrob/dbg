@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="box_geometry" params="epsilon width depth length">
+    <xacro:insert_block name="origin"/>
+    <geometry>
+      <box size="${epsilon*width} ${epsilon*depth} ${epsilon*length}"/>
+    </geometry>
+  </xacro:macro>
+
+  <xacro:macro name="sphere_geometry" params="epsilon radius">
+    <xacro:insert_block name="origin"/>
+    <geometry>
+      <sphere radius="${epsilon*radius}"/>
+    </geometry>
+  </xacro:macro>
+<!--DON'T KNOW WHY BUT ERROR : can't multiply sequence by non-int of type 'unicode' -->
+<!--when evaluating expression 'epsilon*radius'-->
+
+  <xacro:macro name="cylinder_geometry" params="epsilon radius length">
+    <xacro:insert_block name="origin"/>
+    <geometry>
+      <cylinder radius="${epsilon*radius}" length="${epsilon*length}"/>
+    </geometry>
+  </xacro:macro>
+
+  <!-- Generates a box visual/collision/inertial -->
+  <!-- this doesn't work -->
+<!--  <xacro:macro name="box_link" params="title width depth length shift3D:=[0,0,0] rpy:=[0,0,0] mass:=0.01">-->
+<!--  <xacro:macro name="box_link" params="title width depth length shift3D:='0 0 0' rpy:='0 0 0' mass:=0.01">-->
+<!--  <xacro:macro name="box_link" params="title width depth length shift3D:=0 0 0 rpy:=0 0 0 mass:=0.01">-->
+  <xacro:macro name="box_link" params="title width depth length mass:=0.01 epsilon *origin">
+    <link name="${title}">
+	    <xacro:box_geometry epsilon="1" width="width" depth="depth" length="length"/>
+		  
+		  <visual>
+		    <xacro:box_geometry epsilon="1" width="width" depth="depth" length="length"/>
+		    <material name="gray"/>
+		  </visual>
+		  
+		  <collision>
+		    <xacro:box_geometry epsilon="epsilon" width="width" depth="depth" length="length"/>
+		  </collision>
+		  
+		  <inertial>
+        <xacro:insert_block name="origin"/>
+		    <mass value="${mass}"/>
+		    <inertia ixx="${(mass/3)*(depth*depth+length*length)}"
+		             iyy="${(mass/3)*(width*width+length*length)}"
+		             izz="${(mass/3)*(depth*depth+width*width)}"
+		             ixy="0" ixz="0" iyz="0"/>
+		  </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- Generates a sphere visual/collision/inertial -->
+  <xacro:macro name="sphere_link" params="title radius mass:=0.01 epsilon *origin">
+    <link name="${title}">
+      <xacro:sphere_geometry epsilon="1" radius="radius"/>
+		  
+		  <visual>
+		    <xacro:sphere_geometry epsilon="1" radius="radius"/>
+		    <material name="gray"/>
+		  </visual>
+		  
+		  <collision>
+		    <xacro:sphere_geometry epsilon="epsilon" radius="radius"/>
+		  </collision>
+		  
+		  <inertial>
+        <xacro:insert_block name="origin"/>
+		    <mass value="${mass}"/>
+		    <inertia ixx="${(2/5)*mass*radius*radius}"
+		             iyy="${(2/5)*mass*radius*radius}"
+		             izz="${(2/5)*mass*radius*radius}"
+		             ixy="0" ixz="0" iyz="0"/>
+		  </inertial>
+    </link>
+  </xacro:macro>
+
+  <!-- Generates a cylinder visual/collision/inertial -->
+  <xacro:macro name="cylinder_link" params="title radius length mass:=0.01 epsilon *origin">
+    <link name="${title}">
+      <xacro:cylinder_geometry epsilon="1" radius="radius" length="length"/>
+		  
+		  <visual>
+		    <xacro:cylinder_geometry epsilon="1" radius="radius" length="length"/>
+		    <material name="gray"/>
+		  </visual>
+		  
+		  <collision>
+		    <xacro:cylinder_geometry epsilon="epsilon" radius="radius" length="length"/>
+		  </collision>
+		  
+		  <inertial>
+        <xacro:insert_block name="origin"/>
+		    <mass value="${mass}"/>
+		    <inertia ixx="${(1/4)*mass*radius*radius + (1/3)*mass*length*length}"
+		             iyy="${(1/4)*mass*radius*radius + (1/3)*mass*length*length}"
+		             izz="${(1/2)*mass*radius*radius}"
+		             ixy="0" ixz="0" iyz="0"/>
+		  </inertial>
+  </link>
+  </xacro:macro>
+
+  <!-- Generates revolute child joint of parent -->
+  <xacro:macro name="revolute_joint" params="parent child axis lower upper effort velocity *origin">
+    <joint name="${parent}_to_${child}" type="revolute">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${child}"/>
+      <axis xyz="${axis}"/>
+      <limit effort="${effort}"
+             velocity="${velocity}"
+             lower="${lower}"
+             upper="${upper}"/>
+    </joint>
+    
+    <!-- Required for ROS control -->
+    <transmission name="${parent}_to_${child}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${parent}_to_${child}">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${parent}_to_${child}_motor">
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <!-- Not sure if it is useful -->
+<!--    <gazebo reference="${parent}">-->
+<!--      <material>Gazebo/Gray</material>-->
+<!--    </gazebo>-->
+  </xacro:macro>
+
+</robot>

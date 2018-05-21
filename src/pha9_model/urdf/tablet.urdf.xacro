@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="tablet">
+<!--       xmlns:xi="http://www.w3.org/2001/XInclude"-->
+<!--       xmlns:gazebo="http://playerstage.sourceforge.net/gazebo/xmlschema/#gz"-->
+<!--       xmlns:model="http://playerstage.sourceforge.net/gazebo/xmlschema/#model"-->
+<!--       xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"-->
+<!--       xmlns:body="http://playerstage.sourceforge.net/gazebo/xmlschema/#body"-->
+<!--       xmlns:geom="http://playerstage.sourceforge.net/gazebo/xmlschema/#geom"-->
+<!--       xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#joint"-->
+<!--       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"-->
+<!--       xmlns:rendering="http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering"-->
+<!--       xmlns:renderable="http://playerstage.sourceforge.net/gazebo/xmlschema/#renderable"-->
+<!--       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"-->
+<!--       xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics">-->
+
+	<!-- The table under -->
+  <xacro:property name="table_x" value="0.65" />
+  <xacro:property name="table_y" value="0.0" />
+  <xacro:property name="table_height" value="0.68" />
+
+	<!-- The tablet -->
+  <xacro:property name="tablet_height" value="0.345" />
+  <xacro:property name="tablet_width" value="0.57" />
+  <xacro:property name="tablet_depth" value="0.04" />
+  <xacro:property name="tablet_x" value="${table_x}" />
+  <xacro:property name="tablet_y" value="${table_y}" />
+  <xacro:property name="tablet_z" value="${table_height+tablet_depth/2}" />
+
+  <!-- World -->
+  <link name="world">
+  </link>
+
+  <!-- World fixed joint-->
+  <joint name="world_to_base_link" type="fixed">
+    <origin xyz="${tablet_x} ${tablet_y} ${table_height+tablet_depth/2}" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="tablet"/>
+  </joint>
+
+  <link name="tablet">
+    <visual>
+      <geometry>
+        <box size="${tablet_height} ${tablet_width} ${tablet_depth}"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" />
+      <geometry>
+        <box size="${tablet_height} ${tablet_width} ${tablet_depth}"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.1" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001" />
+    </inertial>
+  </link>
+
+</robot>

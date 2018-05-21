@@ -1,0 +1,8 @@
+prefix=/home/mathias/try/catkin_ws/install
+
+Name: rosbook_arm_snippets
+Description: Description of rosbook_arm_snippets
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/mathias/try/catkin_ws/install/lib 
+Requires: moveit_core moveit_ros_planning_interface

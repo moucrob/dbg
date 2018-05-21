@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro"
+       name="rosbook_arm">
+
+  <!-- arm and RGB-D sensor-->
+  <xacro:include filename="$(find pha9_model)/urdf/pha9.urdf.xacro"/>
+  <xacro:include filename="$(find rosbook_arm_description)/urdf/deg_to_rad.xacro" />
+  <xacro:include filename="$(find rosbook_arm_description)/urdf/sensors/xtion_pro_live.urdf.xacro"/>
+
+  <!-- Generic simulator_gazebo plugins -->
+  <xacro:include filename="$(find rosbook_arm_description)/gazebo/gazebo.urdf.xacro"/>
+
+  <!-- Materials for visualization -->
+  <xacro:include filename="$(find rosbook_arm_description)/urdf/materials.urdf.xacro"/>
+
+  <!-- Tester ${radians(90)} je crois que c'est autorisé par Xacro -->
+  <!-- Define RGB-D sensor1 -->
+  <xacro:xtion_pro_live name="rgbd_camera"  parent="first_base">
+    <origin xyz="0 0.175 0.2" rpy="0 ${40.0 * deg_to_rad} 0"/>
+    <origin xyz="0 0 0" rpy="${-90.0 * deg_to_rad} 0 ${-90.0 * deg_to_rad}"/>
+  </xacro:xtion_pro_live>
+  
+  <!-- Define RGB-D sensor2 -->
+  <xacro:xtion_pro_live name="rgbd_camera_2"  parent="first_base">
+    <origin xyz="1.3 0.175 0.2" rpy="0 ${40.0 * deg_to_rad} ${180.0 * deg_to_rad}"/>
+    <origin xyz="0 0 0" rpy="${-90.0 * deg_to_rad} 0 ${-90.0 * deg_to_rad}"/>
+  </xacro:xtion_pro_live>
+  
+  <!-- Define RGB-D sensor3 -->
+  <xacro:xtion_pro_live name="rgbd_camera_3"  parent="first_base">
+    <origin xyz="0.65 -1.325 0.2" rpy="0 ${30.0 * deg_to_rad} ${90.0 * deg_to_rad}"/>
+    <origin xyz="0 0 0" rpy="${-90.0 * deg_to_rad} 0 ${-90.0 * deg_to_rad}"/>
+  </xacro:xtion_pro_live>
+  
+  <!-- Define RGB-D sensor4 -->
+  <xacro:xtion_pro_live name="rgbd_camera_4"  parent="first_base">
+    <origin xyz="0.65 1.675 0.2" rpy="0 ${30.0 * deg_to_rad} ${-90.0 * deg_to_rad}"/>
+    <origin xyz="0 0 0" rpy="${-90.0 * deg_to_rad} 0 ${-90.0 * deg_to_rad}"/>
+  </xacro:xtion_pro_live>
+
+
+</robot>

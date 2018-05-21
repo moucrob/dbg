@@ -1,0 +1,2 @@
+chapter7_tutorials:pha9_model:rosbook_arm_bringup:rosbook_arm_controller_configuration:rosbook_arm_controller_configuration_gazebo:rosbook_arm_description:rosbook_arm_gazebo:rosbook_arm_hardware_gazebo:rosbook_arm_moveit_config:rosbook_arm_pick_and_place:rosbook_arm_snippets
+-DCATKIN_DEVEL_PREFIX=/home/mathias/try/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/mathias/try/catkin_ws/install -G Unix Makefiles

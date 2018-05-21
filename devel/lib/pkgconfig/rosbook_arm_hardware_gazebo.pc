@@ -1,0 +1,8 @@
+prefix=/home/mathias/try/catkin_ws/devel
+
+Name: rosbook_arm_hardware_gazebo
+Description: Description of rosbook_arm_hardware_gazebo
+Version: 0.0.0
+Cflags: -I/home/mathias/try/catkin_ws/src/rosbook_arm_hardware_gazebo/include
+Libs: -L/home/mathias/try/catkin_ws/devel/lib -lrosbook_arm_hardware_gazebo
+Requires: roscpp angles control_toolbox gazebo_ros_control hardware_interface joint_limits_interface

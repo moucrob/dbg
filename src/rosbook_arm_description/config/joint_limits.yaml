@@ -1,0 +1,57 @@
+joint_limits:
+  first_base_link_to_first_auxShould:
+    has_velocity_limits: true
+    max_velocity: &max_arm_vel 5.0
+    has_acceleration_limits: false
+    max_acceleration: &max_arm_acc 0
+  first_auxShould_to_first_shoulder:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_shoulder_to_first_upperArm:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_upperArm_to_first_elbow:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_elbow_to_first_foreArm:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_foreArm_to_first_wrist:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_wrist_to_first_hand:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_hand_to_first_metacarp:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+  first_metacarp_to_first_finger:
+    has_velocity_limits: true
+    max_velocity: *max_arm_vel
+    has_acceleration_limits: false
+    max_acceleration: *max_arm_acc
+
+#  finger_1_joint:
+#    has_velocity_limits: true
+#    max_velocity: &max_finger_vel 5.0
+#    has_acceleration_limits: false
+#    max_acceleration: &max_finger_acc 0
+#  finger_2_joint:
+#    has_velocity_limits: true
+#    max_velocity: *max_finger_vel
+#    has_acceleration_limits: false
+#    max_acceleration: *max_finger_acc

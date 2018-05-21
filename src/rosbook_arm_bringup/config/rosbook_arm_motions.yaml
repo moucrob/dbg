@@ -1,0 +1,20 @@
+play_motion:
+  motions:
+    first_home:
+      joints: [first_base_link_to_first_auxShould, first_auxShould_to_first_shoulder, first_shoulder_to_first_upperArm, first_upperArm_to_first_elbow, first_elbow_to_first_foreArm, first_foreArm_to_first_wrist, first_wrist_to_first_hand, first_hand_to_first_metacarp, first_metacarp_to_first_finger]
+      points:
+      - positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        time_from_start: 0.0
+      meta:
+        name: first_home
+        usage: posture
+        description: first arm down and completely stretched.
+    second_home:
+      joints: [second_base_link_to_second_auxShould, second_auxShould_to_second_shoulder, second_shoulder_to_second_upperArm, second_upperArm_to_second_elbow, second_elbow_to_second_foreArm, second_foreArm_to_second_wrist, second_wrist_to_second_hand, second_hand_to_second_metacarp, second_metacarp_to_second_finger]
+      points:
+      - positions: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        time_from_start: 0.0
+      meta:
+        name: second_home
+        usage: posture
+        description: second arm down and completely stretched.

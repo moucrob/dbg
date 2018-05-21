@@ -1,0 +1,90 @@
+pha9:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  first_arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+        - first_base_link_to_first_auxShould
+        - first_auxShould_to_first_shoulder
+        - first_shoulder_to_first_upperArm
+        - first_upperArm_to_first_elbow
+        - first_elbow_to_first_foreArm
+        - first_foreArm_to_first_wrist
+        - first_wrist_to_first_hand
+        - first_hand_to_first_metacarp
+        - first_metacarp_to_first_finger
+    gains:
+      first_base_link_to_first_auxShould: {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_auxShould_to_first_shoulder:  {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_shoulder_to_first_upperArm:   {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_upperArm_to_first_elbow:      {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_elbow_to_first_foreArm:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_foreArm_to_first_wrist:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_wrist_to_first_hand:          {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_hand_to_first_metacarp:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      first_metacarp_to_first_finger:     {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+    constraints:
+      goal_time: &goal_time_constraint 2.0
+      first_base_link_to_first_auxShould:
+        goal: &goal_pos_constraint 0.3
+      first_auxShould_to_first_shoulder:
+        goal: *goal_pos_constraint
+      first_shoulder_to_first_upperArm:
+        goal: *goal_pos_constraint
+      first_upperArm_to_first_elbow:
+        goal: *goal_pos_constraint
+      first_elbow_to_first_foreArm:
+        goal: *goal_pos_constraint
+      first_foreArm_to_first_wrist:
+        goal: *goal_pos_constraint
+      first_wrist_to_first_hand:
+        goal: *goal_pos_constraint
+      first_hand_to_first_metacarp:
+        goal: *goal_pos_constraint
+      first_metacarp_to_first_finger:
+        goal: *goal_pos_constraint
+
+  second_arm_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+        - second_base_link_to_second_auxShould
+        - second_auxShould_to_second_shoulder
+        - second_shoulder_to_second_upperArm
+        - second_upperArm_to_second_elbow
+        - second_elbow_to_second_foreArm
+        - second_foreArm_to_second_wrist
+        - second_wrist_to_second_hand
+        - second_hand_to_second_metacarp
+        - second_metacarp_to_second_finger
+    gains:
+      second_base_link_to_second_auxShould: {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_auxShould_to_second_shoulder:  {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_shoulder_to_second_upperArm:   {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_upperArm_to_second_elbow:      {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_elbow_to_second_foreArm:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_foreArm_to_second_wrist:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_wrist_to_second_hand:          {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_hand_to_second_metacarp:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+      second_metacarp_to_second_finger:     {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+    constraints:
+      goal_time: *goal_time_constraint
+      second_base_link_to_second_auxShould:
+        goal: *goal_pos_constraint
+      second_auxShould_to_second_shoulder:
+        goal: *goal_pos_constraint
+      second_shoulder_to_second_upperArm:
+        goal: *goal_pos_constraint
+      second_upperArm_to_second_elbow:
+        goal: *goal_pos_constraint
+      second_elbow_to_second_foreArm:
+        goal: *goal_pos_constraint
+      second_foreArm_to_second_wrist:
+        goal: *goal_pos_constraint
+      second_wrist_to_second_hand:
+        goal: *goal_pos_constraint
+      second_hand_to_second_metacarp:
+        goal: *goal_pos_constraint
+      second_metacarp_to_second_finger:
+        goal: *goal_pos_constraint

@@ -1,0 +1,21 @@
+gains:
+  world_to_first_base_link:           {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_base_link_to_first_auxShould: {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_auxShould_to_first_shoulder:  {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_shoulder_to_first_upperArm:   {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_upperArm_to_first_elbow:      {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_elbow_to_first_foreArm:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_foreArm_to_first_wrist:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_wrist_to_first_hand:          {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_hand_to_first_metacarp:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  first_metacarp_to_first_finger:     {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  world_to_second_base_link:            {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_base_link_to_second_auxShould: {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_auxShould_to_second_shoulder:  {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_shoulder_to_second_upperArm:   {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_upperArm_to_second_elbow:      {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_elbow_to_second_foreArm:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_foreArm_to_second_wrist:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_wrist_to_second_hand:          {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_hand_to_second_metacarp:       {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}
+  second_metacarp_to_second_finger:     {p: 1000.0, d: 10.0, i: 0.01, i_clamp: 3.0}

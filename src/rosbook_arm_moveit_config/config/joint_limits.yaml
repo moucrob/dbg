@@ -1,0 +1,94 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  first_auxShould_to_first_shoulder:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_base_link_to_first_auxShould:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_elbow_to_first_foreArm:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_foreArm_to_first_wrist:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_hand_to_first_metacarp:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_metacarp_to_first_finger:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_shoulder_to_first_upperArm:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_upperArm_to_first_elbow:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  first_wrist_to_first_hand:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_auxShould_to_second_shoulder:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_base_link_to_second_auxShould:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_elbow_to_second_foreArm:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_foreArm_to_second_wrist:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_hand_to_second_metacarp:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_metacarp_to_second_finger:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_shoulder_to_second_upperArm:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_upperArm_to_second_elbow:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0
+  second_wrist_to_second_hand:
+    has_velocity_limits: true
+    max_velocity: 6.5
+    has_acceleration_limits: false
+    max_acceleration: 0

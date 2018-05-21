@@ -1,0 +1,8 @@
+prefix=/home/mathias/try/catkin_ws/install
+
+Name: rosbook_arm_moveit_config
+Description: Description of rosbook_arm_moveit_config
+Version: 0.3.0
+Cflags: 
+Libs: -L/home/mathias/try/catkin_ws/install/lib 
+Requires: 

@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="pha9">
+<!--       xmlns:xi="http://www.w3.org/2001/XInclude"-->
+<!--       xmlns:gazebo="http://playerstage.sourceforge.net/gazebo/xmlschema/#gz"-->
+<!--       xmlns:model="http://playerstage.sourceforge.net/gazebo/xmlschema/#model"-->
+<!--       xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"-->
+<!--       xmlns:body="http://playerstage.sourceforge.net/gazebo/xmlschema/#body"-->
+<!--       xmlns:geom="http://playerstage.sourceforge.net/gazebo/xmlschema/#geom"-->
+<!--       xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#joint"-->
+<!--       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"-->
+<!--       xmlns:rendering="http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering"-->
+<!--       xmlns:renderable="http://playerstage.sourceforge.net/gazebo/xmlschema/#renderable"-->
+<!--       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"-->
+<!--       xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics">-->
+
+  <!-- defines some code blocks -->
+  <xacro:include filename="$(find pha9_model)/urdf/macros.urdf.xacro"/>
+<!--  <xacro:include filename="$(find pha9_model)/urdf/macrosTEST.urdf.xacro"/>-->
+
+  <!--A hack property just to try-->
+<!--  <xacro:property name="eps" value="0.95" />-->
+
+  <!-- Geometrical properties -->
+  <xacro:property name="pha9_altitude" value="0.9" />
+  <xacro:property name="pha9_shift_y" value="-0.175" />
+  <xacro:property name="pha9_shift_x_second" value="1.30" />
+  
+  <xacro:property name="radius_shoulder" value="0.05" />
+  <xacro:property name="length_limb" value="0.3" />
+  <xacro:property name="depth_hand" value="0.06" /> <!-- epaisseur -->
+  <xacro:property name="width_hand" value="0.07" /> <!-- largeur -->
+  <xacro:property name="length_hand" value="0.09" />
+  <xacro:property name="radius_metacarp" value="0.01" />
+  
+  <xacro:property name="table_x" value="0.65" />
+  <xacro:property name="table_y" value="0.0" />
+  <xacro:property name="table_z" value="0.0" />
+  <xacro:property name="table_top_thickness" value="0.035"/>
+  
+  <xacro:property name="mass0" value="10000.0" /> <!-- unreal but so that the arm doesn't shake -->
+  <xacro:property name="velocitymax" value="6.5" />
+  <xacro:property name="effortmax" value="1000" />
+
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+
+  <!-- Materials -->
+  <material name="gray">
+    <color rgba="0.80 0.80 0.80 1.00"/>
+  </material>
+
+	<!-- Template to use -->
+<!--  <xacro:box_link title="" width="" depth="" length="" shift3D="" rpy="" mass="${mass0}"/>-->
+<!--  <xacro:sphere_link title="" radius="" shift3D="" rpy="" mass="${mass0}"/>-->
+<!--  <xacro:cylinder_link title="" radius="" length="" shift3D="" rpy="" mass="${mass0}"/>-->
+<!--  <xacro:revolute_joint parent="" child="" shift3D="" axis="" lower="" upper="" effort="${effortmax}" velocity="${velocitymax}"/>-->
+  <!-- Joint name provided by the macro, see macos.urdf.xacro file -->
+
+  <!-- World -->
+  <link name="world">
+  </link>
+
+<!-- ############################# FIRST ARM ############################# -->
+
+  <!-- World fixed joint-->
+  <joint name="world_to_first_base_link" type="fixed">
+    <origin xyz="0 ${pha9_shift_y} ${pha9_altitude}" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="first_base_link"/>
+  </joint>
+
+  <xacro:sphere_link which="first" title="base_link" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="first" parent="base_link" child="auxShould" axis="0 1 0" lower="${-M_PI}" upper="${M_PI/2}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="first" title="auxShould" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="first" parent="auxShould" child="shoulder" axis="1 0 0" lower="${-2*M_PI/3}" upper="0" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="first" title="shoulder" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="first" parent="shoulder" child="upperArm" axis="0 0 1" lower="${-M_PI/2}" upper="${M_PI/2}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:cylinder_link which="first" title="upperArm" radius="${radius_shoulder}" length="${length_limb}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_limb/2}" rpy="0 0 0"/>
+  </xacro:cylinder_link>
+
+  <xacro:revolute_joint which="first" parent="upperArm" child="elbow" axis="0 1 0" lower="${-5*M_PI/6}" upper="0" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 ${-length_limb}"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="first" title="elbow" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="first" parent="elbow" child="foreArm" axis="0 0 1" lower="${-2*M_PI/3}" upper="${2*M_PI/3}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:cylinder_link which="first" title="foreArm" radius="${radius_shoulder}" length="${length_limb}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_limb/2}" rpy="0 0 0"/>
+  </xacro:cylinder_link>
+
+  <xacro:revolute_joint which="first" parent="foreArm" child="wrist" axis="1 0 0" lower="${-M_PI/4}" upper="${0.9*M_PI/2}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 ${-length_limb}"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="first" title="wrist" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="first" parent="wrist" child="hand" axis="0 1 0" lower="${-M_PI/4}" upper="${M_PI/4}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:box_link which="first" title="hand" width="${width_hand}" depth="${depth_hand}" length="${length_hand}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_hand}" rpy="0 0 0"/>
+  </xacro:box_link>
+
+  <xacro:revolute_joint which="first" parent="hand" child="metacarp" axis="1 0 0" lower="${-M_PI/6}" upper="${3*M_PI/8}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="${width_hand/2} ${-depth_hand/2} ${-length_hand-radius_shoulder/2}"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="first" title="metacarp" radius="${radius_metacarp}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="first" parent="metacarp" child="finger" axis="0 1 0" lower="${-M_PI/8}" upper="${M_PI/8}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:cylinder_link which="first" title="finger" radius="${radius_metacarp}" length="${length_hand}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_hand/2}" rpy="0 0 0"/>
+  </xacro:cylinder_link>
+
+  <joint name="first_artifice" type="fixed">
+    <parent link="first_finger"/>
+    <child link="first_EE"/>
+    <origin xyz="0 0 ${-length_hand-radius_metacarp/2}"/>
+<!--		<axis xyz="0 0 1"/>-->
+<!--    <limit velocity="6.5" effort="1000" lower="-0.1" upper="0.1" />-->
+  </joint>
+	<!-- dois-je mettre une transmission si osef de cet first_first_artifice?-->
+
+  <xacro:sphere_link which="first" title="EE" radius="${radius_metacarp}" mass="${mass0}">
+    <origin xyz="0 0 ${radius_metacarp/2}" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+<!-- ############################# SECOND ARM ############################# -->
+
+  <!-- World fixed joint-->
+  <joint name="world_to_second_base_link" type="fixed">
+    <origin xyz="${pha9_shift_x_second} ${-pha9_shift_y} ${pha9_altitude}" rpy="0 0 ${M_PI}"/>
+    <parent link="world"/>
+    <child link="second_base_link"/>
+  </joint>
+
+  <xacro:sphere_link which="second" title="base_link" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="second" parent="base_link" child="auxShould" axis="0 1 0" lower="${-M_PI}" upper="${M_PI/2}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="second" title="auxShould" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="second" parent="auxShould" child="shoulder" axis="1 0 0" lower="${-2*M_PI/3}" upper="0" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="second" title="shoulder" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="second" parent="shoulder" child="upperArm" axis="0 0 1" lower="${-M_PI/2}" upper="${M_PI/2}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:cylinder_link which="second" title="upperArm" radius="${radius_shoulder}" length="${length_limb}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_limb/2}" rpy="0 0 0"/>
+  </xacro:cylinder_link>
+
+  <xacro:revolute_joint which="second" parent="upperArm" child="elbow" axis="0 1 0" lower="${-5*M_PI/6}" upper="0" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 ${-length_limb}"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="second" title="elbow" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="second" parent="elbow" child="foreArm" axis="0 0 1" lower="${-2*M_PI/3}" upper="${2*M_PI/3}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:cylinder_link which="second" title="foreArm" radius="${radius_shoulder}" length="${length_limb}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_limb/2}" rpy="0 0 0"/>
+  </xacro:cylinder_link>
+
+  <xacro:revolute_joint which="second" parent="foreArm" child="wrist" axis="1 0 0" lower="${-M_PI/4}" upper="${0.9*M_PI/2}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 ${-length_limb}"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="second" title="wrist" radius="${radius_shoulder}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="second" parent="wrist" child="hand" axis="0 1 0" lower="${-M_PI/4}" upper="${M_PI/4}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:box_link which="second" title="hand" width="${width_hand}" depth="${depth_hand}" length="${length_hand}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_hand}" rpy="0 0 0"/>
+  </xacro:box_link>
+
+  <xacro:revolute_joint which="second" parent="hand" child="metacarp" axis="1 0 0" lower="${-M_PI/6}" upper="${3*M_PI/8}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="${width_hand/2} ${-depth_hand/2} ${-length_hand-radius_shoulder/2}"/>
+  </xacro:revolute_joint>
+
+  <xacro:sphere_link which="second" title="metacarp" radius="${radius_metacarp}" mass="${mass0}">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+  <xacro:revolute_joint which="second" parent="metacarp" child="finger" axis="0 1 0" lower="${-M_PI/8}" upper="${M_PI/8}" effort="${effortmax}" velocity="${velocitymax}">
+    <origin xyz="0 0 0"/>
+  </xacro:revolute_joint>
+
+  <xacro:cylinder_link which="second" title="finger" radius="${radius_metacarp}" length="${length_hand}" mass="${mass0}">
+    <origin xyz="0 0 ${-length_hand/2}" rpy="0 0 0"/>
+  </xacro:cylinder_link>
+
+  <joint name="second_artifice" type="fixed">
+    <parent link="second_finger"/>
+    <child link="second_EE"/>
+    <origin xyz="0 0 ${-length_hand-radius_metacarp/2}"/>
+<!--		<axis xyz="0 0 1"/>-->
+<!--    <limit velocity="6.5" effort="1000" lower="-0.1" upper="0.1" />-->
+  </joint>
+	<!-- dois-je mettre une transmission si osef de cet second_second_artifice?-->
+
+  <xacro:sphere_link which="second" title="EE" radius="${radius_metacarp}" mass="${mass0}">
+    <origin xyz="0 0 ${radius_metacarp/2}" rpy="0 0 0"/>
+  </xacro:sphere_link>
+
+<!-- ############################# END SECOND ARM ############################# -->
+
+	<!-- Gazebo plugin for ROS control -->
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/pha9</robotNamespace>
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+		</plugin>
+	</gazebo>
+
+</robot>

@@ -1,0 +1,8 @@
+prefix=/home/mathias/try/catkin_ws/install
+
+Name: pha9_model
+Description: Description of pha9_model
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/mathias/try/catkin_ws/install/lib 
+Requires: 
